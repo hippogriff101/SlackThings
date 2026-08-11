@@ -100,6 +100,9 @@ def bot_details(ack, respond, command):
     elif question == "ping":
         print("pong")
         respond("pong :beachball:")
+    elif question == "credits":
+        print("yo flaron my g")
+        respond("https://flaron.halceon.dev/ is so tuff made by <@sahil>")
     else:
         print("fuck you")
         respond("If you are typing to ping the bot do `/things ping` you silly cat, otherwise; Sorry, I didn't get that, try either [help|ping]")
