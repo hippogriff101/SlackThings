@@ -7,21 +7,26 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = App(token=os.getenv("SLACK_BOT_TOKEN"))
-pattern = r"<@[^|]+\|[^>]+>" # ai assisted regex
+pattern_member = r"<@[^|]+\|[^>]+>" # ai assisted regex
+pattern_channel = r"<#[^>]+>" # matches <#anything>
 
 
 @app.command("/count")
 def member_count(ack, respond, command):
     ack()
     channel_name = command.get("text", "").strip()
-    if not channel_name:
-        respond("You need to give me a channel, e.g. `/count #freddies-castle`")
-        return
     print(f"someone is trying to look up {channel_name}")
-    trimname = channel_name[1:] if channel_name.startswith('#') else channel_name
+
+    match_chan = re.fullmatch(pattern_channel, channel_name)
+    print(channel_name)
+    if not match_chan:
+        respond(f"You need to #-mention a channel, you ran `/count {channel_name}`")
+        return
+    
+    trimname = match_chan.group(0)[2:-1]
     try:
         r = requests.get(
-            f"https://flaron.halceon.dev/cname/%23{trimname}",
+            f"https://flaron.halceon.dev/cid/{trimname}",
             headers={"accept": "application/json"}
         )
 
@@ -39,7 +44,7 @@ def member_count(ack, respond, command):
         total_members = int(counts.get("total", 0))
         bot_members = int(counts.get("bots", 0))
         respond(
-            f"Hey :wavey:, I found your channel #{trimname}! \n"
+            f"Hey :wavey:, I found your channel <#{trimname}>! \n"
             f"Total Members: {total_members} \n"
             f":sweat_smile:  Real Humans: {total_members - bot_members} \n"
             f":robot: Bots: {bot_members}"
@@ -58,9 +63,9 @@ def promote_mcg(ack, respond, command):
     selected_user = command.get("text", "").strip()
     print(f"someone is trying to promote {selected_user}")
 
-    match = re.fullmatch(pattern, selected_user)
+    match = re.fullmatch(pattern_member, selected_user)
     if not match:
-        respond("You need to @-mention exactly one user, e.g. `/promote @someone`")
+        respond(f"You need to @-mention exactly one user, you ran `/promote {selected_user}`")
         return
 
     selected_id = match.group(0).split("|")[0][2:]
@@ -85,6 +90,19 @@ def promote_mcg(ack, respond, command):
         print("An unexpected error occurred.")
         respond("Unexpected error occurred. :sob:")
 
+@app.command("/things")
+def bot_details(ack, respond, command):
+    ack()
+    question = command.get("text", "").strip()
+    if question == "help":
+        print("user in distress, activated help")
+        respond("Heyo :cat-wave: , I'm a bot made by <@freddie> \n Here is what you can run: \n - `/count [#name-of-public-channel]` - find the member count of a public channel \n - `/promote [@user]` - Promote a user from a multi channel guest to full user (use responsably, cc; @shroud) \n - `/things [help|ping]` - this cmd or ping the bot, but why would you need to do that!")
+    elif question == "ping":
+        print("pong")
+        respond("pong :beachball:")
+    else:
+        print("fuck you")
+        respond("If you are typing to ping the bot do `/things ping` you silly cat, otherwise; Sorry, I didn't get that, try either [help|ping]")
 
 if __name__ == "__main__":
     handler = SocketModeHandler(app, os.getenv("SLACK_APP_TOKEN"))
