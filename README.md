@@ -19,7 +19,9 @@ Just a simple Slack Bolt in Python bot using Socket Mode.
 
 ## Try it yourself
 
-If you are a member of the [Hack Club Slack](https://hackclub.com/slack) then you can head to my personal channel [#freddies-castle](https://hackclub.enterprise.slack.com/archives/C0AJMKSK4UW). The bot only responds to messages (only you can see) so it doesn't show up in the channel to everyone and we are happy to have you though.
+If you are a member of the [Hack Club Slack](https://hackclub.com/slack) then you can head to [#slackthings-bot](https://hackclub.enterprise.slack.com/archives/C0AJMKSK4UW) and get started with `/things help`! Just pings me, [@freddie](https://hackclub.enterprise.slack.com/team/U078VN0UU2K) if you are having issues.
+
+Or you can add the bot, [@SlackThings](https://hackclub.enterprise.slack.com/archives/D0BPPJA8886) to any private or public channel!
 
 ## Self Host
 
