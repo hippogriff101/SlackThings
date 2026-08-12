@@ -1,3 +1,5 @@
+<img src="SlackThings.png" alt="SlackThings Logo" width="100px" height="auto">
+
 # SlackThings
 
 stuff that is cool using [Flaron API](https://flaron.halceon.dev/)!
