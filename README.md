@@ -4,6 +4,9 @@ stuff that is cool using [Flaron API](https://flaron.halceon.dev/)!
 
 as you may be able to find from my [stardance project](https://stardance.hackclub.com/projects/45792) this bot was made beacuse I don't like how slakc shows the number of bot in a channels total count, so i fixed that, kind of.
 
+![Hackatime Badge Pill w/ hour count](https://hackatime.hackclub.com/api/v1/badge/U078VN0UU2K/hippogriff101/SlackThings)
+
+
 ## Commands / Features
 
 - `/count` - find the number of users in a channel (usage: `/count #a-channel-name`)
